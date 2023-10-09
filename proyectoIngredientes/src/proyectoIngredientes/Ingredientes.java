@@ -29,7 +29,32 @@ public class Ingredientes {
     }
 
     public String getUnidad() {
-        return unidad;
+    	while(true) {
+    		System.out.println("seleccione la unidad de medida");
+    		System.out.println("1. KG");
+    		System.out.println("2. G");
+    		System.out.println("3. LB");
+    		System.out.println("4. L");
+    		switch(opcion) {
+    		case 1:
+    			System.out.println("kg");
+    			break;
+    		case 2:
+    			System.out.println("G");
+    			break;
+    		case 3:
+    			System.out.println("G");
+    			break;
+    		case 4:
+    			System.out.println("L");
+    			break;
+    		}
+    		
+    		
+    		
+    	}
+    	
+        
     }
 
     public void setUnidad(String unidad) {
@@ -61,6 +86,7 @@ public class Ingredientes {
     public void agregarIngrediente(String ingrediente) {
         ingredientes.add(ingrediente);
     }
+    
 
     // Método para imprimir información sobre la clase
     @Override
