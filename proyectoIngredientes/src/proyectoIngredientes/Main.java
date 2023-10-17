@@ -1,13 +1,13 @@
 package proyectoIngredientes;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Main {
 
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         List<Ingredientes> listaIngredientes = new ArrayList<>();
         List<Receta> listaRecetas = new ArrayList<>();
 
@@ -31,6 +31,8 @@ public class Main {
             System.out.println("4. Listar recetas");
             System.out.println("5. Eliminar ingrediente");
             System.out.println("6. Salir");
+            System.out.println("7. Editar receta");
+            System.out.println("8. Eliminar receta");
             System.out.print("Selecciona una opción: ");
 
             int opcion = scanner.nextInt();
@@ -38,24 +40,32 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                	   System.out.println("Ingrese el nombre del nuevo ingrediente a añadir: ");
-                       String nombreIngrediente = scanner.nextLine();
-                       System.out.println("Ingrese la unidad: ");
-                       String unidad = scanner.nextLine();
-                       System.out.println("Ingrese el precio: ");
-                       int precio = scanner.nextInt();
-                       scanner.nextLine(); // Consumir la línea en blanco
-                       System.out.println("Ingrese el sitio de compras: ");
-                       String sitioCompras = scanner.nextLine();
-
-                       Ingredientes nuevoIngrediente = new Ingredientes(nombreIngrediente, unidad, precio, sitioCompras);
-                       listaIngredientes.add(nuevoIngrediente);
-                       System.out.println("Ingrediente agregado con éxito.");
-                       break;
-                   
+                    System.out.println("Ingrese el nombre del nuevo ingrediente a añadir: ");
+                    String nombreIngrediente = scanner.nextLine();
+                    System.out.println("Ingrese la unidad en KG, G, LB, L: ");
+                    String unidad = scanner.nextLine().toLowerCase();
+                    
+                    if(!unidad.equals("kg") && !unidad.equals("lb") && !unidad.equals("g") && !unidad.equals("l")) {
+                        System.out.println("No se puede ingresar la unidad");
+                    } else {
+                        System.out.println("Ingrese las calorias: ");
+                        int calorias = scanner.nextInt();
+                        if (calorias < 0) {
+                            System.out.println("No se puede agregar un valor negativo");
+                        } else {
+                            scanner.nextLine();
+                            System.out.println("Ingrese el sitio de compras: ");
+                            String sitioCompras = scanner.nextLine();
+                            
+                            Ingredientes nuevoIngrediente = new Ingredientes(nombreIngrediente, unidad, calorias, sitioCompras);
+                            listaIngredientes.add(nuevoIngrediente);
+                            System.out.println("Ingrediente agregado con éxito.");
+                        }
+                    }
+                    break;
 
                 case 2:
-                	System.out.println("Ingrese el nombre de la nueva receta: ");
+                    System.out.println("Ingrese el nombre de la nueva receta: ");
                     String nombreReceta = scanner.nextLine();
                     System.out.println("Ingrese el tiempo de preparación en minutos: ");
                     int tiempoPreparacion = scanner.nextInt();
@@ -90,8 +100,6 @@ public class Main {
                     listaRecetas.add(nuevaReceta);
                     System.out.println("Receta agregada con éxito.");
                     break;
-                   
-                   
 
                 case 3:
                     System.out.println("Ingredientes existentes:");
@@ -124,27 +132,37 @@ public class Main {
                     System.exit(0);
                     break;
 
+                case 7:
+                    System.out.println("Ingrese el nombre de la receta a editar: ");
+                    String nombreRecetaEditar = scanner.nextLine();
+                    editarReceta(listaRecetas, nombreRecetaEditar);
+                    break;
+
+                case 8:
+                    System.out.println("Ingrese el nombre de la receta a eliminar: ");
+                    String nombreRecetaEliminar = scanner.nextLine();
+                    eliminarReceta(listaRecetas, nombreRecetaEliminar);
+                    break;
+
                 default:
                     System.out.println("Opción no válida. Por favor, selecciona una opción válida.");
             }
         }
     }
 
-    // Método para eliminar un ingrediente de la lista
     private static void eliminarIngrediente(List<Ingredientes> listaIngredientes, String nombreIngredienteEliminar) {
         Iterator<Ingredientes> iterator = listaIngredientes.iterator();
         while (iterator.hasNext()) {
             Ingredientes ingrediente = iterator.next();
             if (ingrediente.getNombre().equalsIgnoreCase(nombreIngredienteEliminar)) {
                 iterator.remove();
-                System.out.println("Ingrediente eliminado con éxito.");
+                System.out.println("Ingrediente eliminado con éxito");
                 return;
             }
         }
         System.out.println("Ingrediente no encontrado en la lista.");
     }
 
-    // Método para verificar si un ingrediente se utiliza en alguna receta
     private static boolean seUtilizaEnReceta(List<Receta> listaRecetas, String nombreIngrediente) {
         for (Receta receta : listaRecetas) {
             for (Ingredientes ingrediente : receta.getIngredientes()) {
@@ -155,4 +173,45 @@ public class Main {
         }
         return false;
     }
+
+    private static void editarReceta(List<Receta> listaRecetas, String nombreRecetaEditar) {
+        for (Receta receta : listaRecetas) {
+            if (receta.getNombre().equalsIgnoreCase(nombreRecetaEditar)) {
+                System.out.println("Ingrese el nuevo nombre de la receta: ");
+                String nuevoNombreReceta = scanner.nextLine();
+                System.out.println("Ingrese el nuevo tiempo de preparación en minutos: ");
+                int nuevoTiempoPreparacion = scanner.nextInt();
+                scanner.nextLine(); // Consumir la línea en blanco
+                System.out.println("Ingrese la nueva cantidad de personas a servir: ");
+                int nuevaCantidadPersonas = scanner.nextInt();
+                scanner.nextLine(); // Consumir la línea en blanco
+                System.out.println("Ingrese la nueva descripción de la receta: ");
+                String nuevaDescripcion = scanner.nextLine();
+
+                receta.setNombre(nuevoNombreReceta);
+                receta.setTiempoPreparacionMinutos(nuevoTiempoPreparacion);
+                receta.setCantidadPersonas(nuevaCantidadPersonas);
+                receta.setDescripcion(nuevaDescripcion);
+
+                System.out.println("Receta editada con éxito.");
+                return;
+            }
+        }
+        System.out.println("Receta no encontrada en el listado.");
+    }
+
+    private static void eliminarReceta(List<Receta> listaRecetas, String nombreRecetaEliminar) {
+        Iterator<Receta> iterator = listaRecetas.iterator();
+        while (iterator.hasNext()) {
+            Receta receta = iterator.next();
+            if (receta.getNombre().equalsIgnoreCase(nombreRecetaEliminar)) {
+                iterator.remove();
+                System.out.println("Receta eliminada con éxito.");
+                return;
+            }
+        }
+        System.out.println("Receta no encontrada en el listado.");
+    }
+
+   
 }

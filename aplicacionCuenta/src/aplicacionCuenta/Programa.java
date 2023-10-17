@@ -11,7 +11,7 @@ public class Programa {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Cuenta cuenta1 = new Cuenta("Uala", "SANTIAGO MUÑOZ " , 1000);
+		Cuenta cuenta1 = new Cuenta("Uala", "SANTIAGO MUÑOZ " , -1000);
 		Cuenta cuenta2 = new Cuenta( "NU BANK"," BYRON MALLAMA " , 2000); 
 	    System.out.println(cuenta1);
 		System.out.println(cuenta2); 

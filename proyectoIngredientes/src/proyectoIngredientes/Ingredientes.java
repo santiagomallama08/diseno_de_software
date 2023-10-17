@@ -14,9 +14,16 @@ public class Ingredientes {
     public Ingredientes(String nombre, String unidad, int calorias, String sitioCompras) {
         this.nombre = nombre;
         this.unidad = unidad;
-        this.calorias = calorias;
         this.sitioCompras = sitioCompras;
         this.ingredientes = new ArrayList<>();
+        
+        if(calorias<0) {
+        	this.calorias = 0;
+        	System.out.println("no se aceptan valores negativos");
+        }else {
+        	this.calorias= calorias;
+        }
+
     }
 
     // Métodos para acceder a los atributos (getters y setters)
@@ -29,32 +36,7 @@ public class Ingredientes {
     }
 
     public String getUnidad() {
-    	while(true) {
-    		System.out.println("seleccione la unidad de medida");
-    		System.out.println("1. KG");
-    		System.out.println("2. G");
-    		System.out.println("3. LB");
-    		System.out.println("4. L");
-    		switch(opcion) {
-    		case 1:
-    			System.out.println("kg");
-    			break;
-    		case 2:
-    			System.out.println("G");
-    			break;
-    		case 3:
-    			System.out.println("G");
-    			break;
-    		case 4:
-    			System.out.println("L");
-    			break;
-    		}
-    		
-    		
-    		
-    	}
-    	
-        
+    	return unidad;
     }
 
     public void setUnidad(String unidad) {

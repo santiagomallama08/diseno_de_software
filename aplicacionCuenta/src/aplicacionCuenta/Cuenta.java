@@ -22,7 +22,7 @@ public class Cuenta {
 	 this.balance =balance;
 	 
 	 if (balance<0) {
-		 this.balance = 0;
+		 this.balance = (Integer) null;
 		 System.out.println("el valor es negatavio..");
 	 }else {
 		 this.balance = balance;
